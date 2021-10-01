@@ -141,6 +141,7 @@ services:
             - TWITCH_CALLBACK_URL
             - TWITCH_CLIENT_SECRET
             - TWITCH_CLIENT_ID
+            - JWT_SECRET_KEY
             - PORT=$API_PORT
         networks:
             - web

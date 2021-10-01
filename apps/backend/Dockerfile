@@ -24,9 +24,6 @@ COPY --from=pruner /usr/src/app/node_modules ./node_modules
 # copy prisma client
 COPY --from=prisma /app/node_modules/.prisma ./node_modules/.prisma
 
-# copy .env
-COPY ./apps/backend/.env .
-
 # copy code
 COPY ./dist/apps/backend .
 
