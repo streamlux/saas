@@ -26,5 +26,5 @@ jobs:
       - name: 'Install Dependencies'
         run: npm i
         
-      - name: 'nx run backend:make:ci'
-        run: npx nx run backend:make:ci
+      - name: 'nx run api:make:ci'
+        run: npx nx run api:make:ci
