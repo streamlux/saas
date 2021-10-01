@@ -76,12 +76,12 @@
                         "ci": {
                             "push": true,
                             "tags": [
-                                "ghcr.io/streamlux/saas/api:1.0.0"
+                                "ghcr.io/streamlux/saas-api:latest"
                             ],
                             "meta": {
                                 "enabled": true,
                                 "mode": "prepend"
-                              }
+                            }
                         }
                     }
                 },
