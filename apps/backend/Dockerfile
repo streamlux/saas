@@ -1,7 +1,7 @@
 FROM node:14.1-alpine as prisma
 WORKDIR /app
 COPY ./dist/apps/backend/package.json .
-COPY ./apps/backend/prisma ./prisma
+COPY ./prisma ./prisma
 # install prisma to generate client
 RUN npm install prisma
 RUN npm install --production

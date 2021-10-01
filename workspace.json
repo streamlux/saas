@@ -6,6 +6,27 @@
             "sourceRoot": "apps/backend/src",
             "projectType": "application",
             "targets": {
+                "make": {
+                    "executor": "@nrwl/workspace:run-commands",
+                    "options": {
+                        "commands": [
+                          "npx prisma generate",
+                          "nx run backend:build:production",
+                          "nx run backend:docker"
+                        ],
+                        "cwd": ".",
+                        "parallel": false
+                    },
+                    "configurations": {
+                        "ci": {
+                            "commands": [
+                                "npx prisma generate",
+                                "nx run backend:build:production",
+                                "nx run backend:docker:ci"
+                              ]
+                        }
+                    }
+                },
                 "build": {
                     "executor": "@nrwl/node:build",
                     "outputs": [
