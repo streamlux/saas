@@ -77,18 +77,7 @@
                             "push": true,
                             "tags": [
                                 "ghcr.io/streamlux/saas-api:latest"
-                            ],
-                            "meta": {
-                                "enabled": true,
-                                "mode": "prepend",
-                                "images": [
-                                    "streamlux/saas-api"
-                                ],
-                                "tags": [
-                                    "type=semver,pattern={{version}}",
-                                    "type=ref,event=branch"
-                                ]
-                            }
+                            ]
                         }
                     }
                 },
