@@ -1,0 +1,6 @@
+.env
+.env.*
+
+letsencrypt/
+run/
+logs/
