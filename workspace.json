@@ -50,6 +50,14 @@
                         "platforms": [
                             "linux/amd64"
                         ]
+                    },
+                    "configurations": {
+                        "ci": {
+                           "push": true,
+                           "tags": [
+                                "ghcr.io/streamlux/saas:1.0.0"
+                           ]
+                        }
                     }
                 },
                 "lint": {
