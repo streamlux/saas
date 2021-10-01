@@ -55,6 +55,17 @@ https://notiz.dev/blog/dockerizing-nestjs-with-prisma-and-postgresql
 
 This project was generated using [Nx](https://nx.dev).
 
+### Docker
+
+Reducing image size:
+* https://medium.com/trendyol-tech/how-we-reduce-node-docker-image-size-in-3-steps-ff2762b51d5a
+* https://jneate.github.io/technology/2019/12/20/simple-dockerfile-performance-improvements-(part-1).html
+
+
+### GitHub Actions
+
+* nx-docker GitHub Actions push to ghcr - https://www.npmjs.com/package/@nx-tools/nx-docker/v/1.0.0-beta.1?activeTab=readme
+
 ## Adding capabilities to your workspace
 
 Nx supports many plugins which add capabilities for developing different types of applications and different tools.
