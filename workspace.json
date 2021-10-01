@@ -1,18 +1,18 @@
 {
     "version": 2,
     "projects": {
-        "backend": {
-            "root": "apps/backend",
-            "sourceRoot": "apps/backend/src",
+        "api": {
+            "root": "apps/api",
+            "sourceRoot": "apps/api/src",
             "projectType": "application",
             "targets": {
                 "make": {
                     "executor": "@nrwl/workspace:run-commands",
                     "options": {
                         "commands": [
-                          "npx prisma generate",
-                          "nx run backend:build:production",
-                          "nx run backend:docker"
+                            "npx prisma generate",
+                            "nx run api:build:production",
+                            "nx run api:docker"
                         ],
                         "cwd": ".",
                         "parallel": false
@@ -21,24 +21,20 @@
                         "ci": {
                             "commands": [
                                 "npx prisma generate",
-                                "nx run backend:build:production",
-                                "nx run backend:docker:ci"
-                              ]
+                                "nx run api:build:production",
+                                "nx run api:docker:ci"
+                            ]
                         }
                     }
                 },
                 "build": {
                     "executor": "@nrwl/node:build",
-                    "outputs": [
-                        "{options.outputPath}"
-                    ],
+                    "outputs": ["{options.outputPath}"],
                     "options": {
-                        "outputPath": "dist/apps/backend",
-                        "main": "apps/backend/src/main.ts",
-                        "tsConfig": "apps/backend/tsconfig.app.json",
-                        "assets": [
-                            "apps/backend/src/assets"
-                        ]
+                        "outputPath": "dist/apps/api",
+                        "main": "apps/api/src/main.ts",
+                        "tsConfig": "apps/api/tsconfig.app.json",
+                        "assets": ["apps/api/src/assets"]
                     },
                     "configurations": {
                         "production": {
@@ -48,8 +44,8 @@
                             "inspect": false,
                             "fileReplacements": [
                                 {
-                                    "replace": "apps/backend/src/environments/environment.ts",
-                                    "with": "apps/backend/src/environments/environment.prod.ts"
+                                    "replace": "apps/api/src/environments/environment.ts",
+                                    "with": "apps/api/src/environments/environment.prod.ts"
                                 }
                             ]
                         }
@@ -58,47 +54,35 @@
                 "serve": {
                     "executor": "@nrwl/node:execute",
                     "options": {
-                        "buildTarget": "backend:build"
+                        "buildTarget": "api:build"
                     }
                 },
                 "docker": {
                     "executor": "@nx-tools/nx-docker:build",
                     "options": {
-                        "file": "apps/backend/Dockerfile",
-                        "tags": [
-                            "streamlux/saas-backend:latest"
-                        ],
-                        "platforms": [
-                            "linux/amd64"
-                        ]
+                        "file": "apps/api/Dockerfile",
+                        "tags": ["streamlux/saas-api:latest"],
+                        "platforms": ["linux/amd64"]
                     },
                     "configurations": {
                         "ci": {
-                           "push": true,
-                           "tags": [
-                                "ghcr.io/streamlux/saas:1.0.0"
-                           ]
+                            "push": true,
+                            "tags": ["ghcr.io/streamlux/saas-api:1.0.0"]
                         }
                     }
                 },
                 "lint": {
                     "executor": "@nrwl/linter:eslint",
-                    "outputs": [
-                        "{options.outputFile}"
-                    ],
+                    "outputs": ["{options.outputFile}"],
                     "options": {
-                        "lintFilePatterns": [
-                            "apps/backend/**/*.ts"
-                        ]
+                        "lintFilePatterns": ["apps/api/**/*.ts"]
                     }
                 },
                 "test": {
                     "executor": "@nrwl/jest:jest",
-                    "outputs": [
-                        "coverage/apps/backend"
-                    ],
+                    "outputs": ["coverage/apps/api"],
                     "options": {
-                        "jestConfig": "apps/backend/jest.config.js",
+                        "jestConfig": "apps/api/jest.config.js",
                         "passWithNoTests": true
                     }
                 }
@@ -111,9 +95,7 @@
             "targets": {
                 "build": {
                     "executor": "@nrwl/next:build",
-                    "outputs": [
-                        "{options.outputPath}"
-                    ],
+                    "outputs": ["{options.outputPath}"],
                     "options": {
                         "root": "apps/frontend",
                         "outputPath": "dist/apps/frontend"
@@ -143,9 +125,7 @@
                 },
                 "test": {
                     "executor": "@nrwl/jest:jest",
-                    "outputs": [
-                        "coverage/apps/frontend"
-                    ],
+                    "outputs": ["coverage/apps/frontend"],
                     "options": {
                         "jestConfig": "apps/frontend/jest.config.js",
                         "passWithNoTests": true
@@ -153,9 +133,7 @@
                 },
                 "lint": {
                     "executor": "@nrwl/linter:eslint",
-                    "outputs": [
-                        "{options.outputFile}"
-                    ],
+                    "outputs": ["{options.outputFile}"],
                     "options": {
                         "lintFilePatterns": [
                             "apps/frontend/**/*.{ts,tsx,js,jsx}"
@@ -183,13 +161,9 @@
                 },
                 "lint": {
                     "executor": "@nrwl/linter:eslint",
-                    "outputs": [
-                        "{options.outputFile}"
-                    ],
+                    "outputs": ["{options.outputFile}"],
                     "options": {
-                        "lintFilePatterns": [
-                            "apps/frontend-e2e/**/*.{js,ts}"
-                        ]
+                        "lintFilePatterns": ["apps/frontend-e2e/**/*.{js,ts}"]
                     }
                 }
             }
@@ -198,7 +172,7 @@
     "cli": {
         "defaultCollection": "@nrwl/nest"
     },
-    "defaultProject": "backend",
+    "defaultProject": "api",
     "generators": {
         "@nrwl/react": {
             "application": {
