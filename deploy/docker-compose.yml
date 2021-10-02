@@ -132,7 +132,7 @@ services:
     # nest.js backend
     backend:
         container_name: backend
-        image: streamlux/saas-backend
+        image: ghcr.io/streamlux/saas-api
         restart: always
         depends_on:
             - db
