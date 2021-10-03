@@ -11,12 +11,28 @@ generator client {
     binaryTargets = "linux-musl"
 }
 
+enum Role {
+    USER
+    ADMIN
+}
+
 model User {
     id          Int            @id @default(autoincrement())
     email       String         @unique
     name        String?
-    twitch      TwitchAccount?
+    createdAt   DateTime       @default(now())
+    updatedAt   DateTime       @default(now())
+    role        Role           @default(USER)
     preferences Preferences?
+    twitch      TwitchAccount?
+}
+
+model Preferences {
+    id        Int      @id @default(autoincrement())
+    updatedAt DateTime @default(now())
+    theme     String
+    userId    Int
+    User      User     @relation(fields: [userId], references: [id])
 }
 
 model TwitchAccount {
@@ -24,13 +40,6 @@ model TwitchAccount {
     accessToken        String
     refreshToken       String
     accessTokenExpires Int
-    User               User   @relation(fields: [userId], references: [id])
     userId             Int    @unique
-}
-
-model Preferences {
-    lastUpdated DateTime @default(now())
-    theme       String
-    User        User     @relation(fields: [userId], references: [id])
-    userId      Int      @unique
+    User               User   @relation(fields: [userId], references: [id])
 }

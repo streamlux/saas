@@ -4,3 +4,4 @@
 letsencrypt/
 run/
 logs/
+volumes/
