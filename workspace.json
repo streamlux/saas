@@ -75,10 +75,11 @@
                     "configurations": {
                         "ci": {
                             "push": true,
+                            "no_cache": true,
                             "meta": {
                                 "enabled": true,
                                 "images": [
-                                    "gcr.io/streamlux/saas-api"
+                                    "ghcr.io/streamlux/saas-api"
                                 ],
                                 "tags": [
                                     "type=ref,event=branch",
