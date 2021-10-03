@@ -20,16 +20,19 @@ model User {
     id          Int            @id @default(autoincrement())
     email       String         @unique
     name        String?
+    createdAt   DateTime       @default(now())
+    updatedAt   DateTime       @default(now())
     role        Role           @default(USER)
     preferences Preferences?
     twitch      TwitchAccount?
 }
 
 model Preferences {
-    lastUpdated DateTime @default(now())
-    theme       String
-    User        User     @relation(fields: [userId], references: [id])
-    userId      Int      @unique
+    id        Int      @id @default(autoincrement())
+    updatedAt DateTime @default(now())
+    theme     String
+    userId    Int
+    User      User     @relation(fields: [userId], references: [id])
 }
 
 model TwitchAccount {
@@ -37,6 +40,6 @@ model TwitchAccount {
     accessToken        String
     refreshToken       String
     accessTokenExpires Int
-    User               User   @relation(fields: [userId], references: [id])
     userId             Int    @unique
+    User               User   @relation(fields: [userId], references: [id])
 }
