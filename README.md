@@ -4,19 +4,20 @@
 
 ## Todo
 
-- [ ] Multi stage build https://codefresh.io/docker-tutorial/node_docker_multistage/
-- [ ] Database backup/restore to S3
+- [x] Multi stage build https://codefresh.io/docker-tutorial/node_docker_multistage/
+- [x] Database backup/restore
+- [x] Prisma migrations
+- [x] Publishing docker images
+- [ ] Database backup/restore to s3/b2/azure
 - [ ] Landing page
-- [ ] GoTrue
 - [ ] Common components like login/signup forms, pricing
 - [ ] Subscriptions API*
 - [ ] Twitch event listener API*
-- [ ] Prisma migrations
-- [ ] Publishing docker images
-- [ ] Deploy to production
 - [ ] Organize code into libraries
 - [ ] Analytics in frontend
 - [ ] Self hosted analytics?
+- [ ] GoTrue
+- [ ] Deploy to production
 
 ## Tech stack
 
