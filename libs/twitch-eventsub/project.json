@@ -1,0 +1,23 @@
+{
+    "root": "libs/twitch-eventsub",
+    "sourceRoot": "libs/twitch-eventsub/src",
+    "projectType": "library",
+    "targets": {
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": ["libs/twitch-eventsub/**/*.ts"]
+            }
+        },
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/twitch-eventsub"],
+            "options": {
+                "jestConfig": "libs/twitch-eventsub/jest.config.js",
+                "passWithNoTests": true
+            }
+        }
+    },
+    "tags": []
+}

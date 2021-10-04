@@ -1,0 +1,15 @@
+@base=http://localhost:3333
+
+POST {{base}}/api/twitch/subscriptions/115341247/stream.online HTTP/1.1
+
+###
+
+GET {{base}}/api/twitch/subscriptions
+
+###
+
+DELETE {{base}}/api/twitch/subscriptions
+
+###
+
+GET {{base}}/api

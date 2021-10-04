@@ -1,0 +1,97 @@
+{
+    "root": "apps/frontend",
+    "sourceRoot": "apps/frontend",
+    "projectType": "application",
+    "targets": {
+        "make": {
+            "executor": "@nrwl/workspace:run-commands",
+            "options": {
+                "commands": [
+                    "npx prisma generate",
+                    "nx run frontend:build:production",
+                    "nx run frontend:docker"
+                ],
+                "cwd": ".",
+                "parallel": false
+            },
+            "configurations": {
+                "ci": {
+                    "commands": [
+                        "npx prisma generate",
+                        "nx run frontend:build:production",
+                        "nx run frontend:docker:ci"
+                    ]
+                }
+            }
+        },
+        "build": {
+            "executor": "@nrwl/next:build",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "root": "apps/frontend",
+                "outputPath": "dist/apps/frontend"
+            },
+            "configurations": {
+                "production": {}
+            }
+        },
+        "serve": {
+            "executor": "@nrwl/next:server",
+            "options": {
+                "buildTarget": "frontend:build",
+                "dev": true
+            },
+            "configurations": {
+                "production": {
+                    "buildTarget": "frontend:build:production",
+                    "dev": false
+                }
+            }
+        },
+        "docker": {
+            "executor": "@nx-tools/nx-docker:build",
+            "options": {
+                "file": "apps/frontend/Dockerfile",
+                "tags": ["streamlux/saas-frontend:latest"],
+                "platforms": ["linux/amd64"]
+            },
+            "configurations": {
+                "ci": {
+                    "push": true,
+                    "no_cache": true,
+                    "meta": {
+                        "enabled": true,
+                        "images": ["ghcr.io/streamlux/saas-frontend"],
+                        "tags": [
+                            "type=ref,event=branch",
+                            "type=ref,event=pr",
+                            "type=semver,pattern={{version}}"
+                        ]
+                    }
+                }
+            }
+        },
+        "export": {
+            "executor": "@nrwl/next:export",
+            "options": {
+                "buildTarget": "frontend:build:production"
+            }
+        },
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/apps/frontend"],
+            "options": {
+                "jestConfig": "apps/frontend/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": ["apps/frontend/**/*.{ts,tsx,js,jsx}"]
+            }
+        }
+    },
+    "tags": []
+}

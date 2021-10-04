@@ -30,3 +30,9 @@ jobs:
               run: npx nx run api:make:ci
               env:
                   INPUT_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+            
+            - name: 'nx run frontend:make:ci'
+              run: npx nx run frontend:make:ci
+              env:
+                  INPUT_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

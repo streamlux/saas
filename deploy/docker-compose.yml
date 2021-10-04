@@ -68,6 +68,8 @@ services:
             #to define middlewares
             traefik.http.middlewares.redirect_https.redirectscheme.scheme: https # <== define a https redirection middleware
 
+            traefik.http.services.frontend.loadbalancer.server.port: 3000
+
     ################################################
     ####         portainer - docker mngt      #####
     ##############################################
@@ -129,6 +131,28 @@ services:
             - backend
             - web
 
+    frontend:
+        container_name: frontend
+        image: ghcr.io/streamlux/saas-frontend
+        restart: always
+        environment:
+            - DATABASE_URL
+            - TWITTER_ID
+            - TWITTER_SECRET
+            - TWITCH_CLIENT_ID
+            - TWITCH_CLIENT_SECRET
+            - NEXTAUTH_URL
+            - SECRET
+        networks:
+            - web
+            - backend
+        labels:
+            traefik.enable: true # <== Enable traefik to proxy this container
+
+            traefik.http.routers.frontend.rule: Host(`${DOMAIN_PREFIX}${APP_DOMAIN}`)
+            traefik.http.routers.frontend.entrypoints: web-secured # <== Defining entrypoint for https
+            traefik.http.routers.frontend.tls.certresolver: mytlschallenge # <== Defining certsresolvers for https
+
     # nest.js backend
     backend:
         container_name: backend
@@ -143,12 +167,13 @@ services:
             - TWITCH_CLIENT_ID
             - JWT_SECRET_KEY
             - PORT=$API_PORT
+            - EVENTSUB_CALLBACK_DOMAIN
         networks:
             - web
         labels:
             traefik.enable: true # <== Enable traefik to proxy this container
 
-            traefik.http.routers.api.rule: Host(`${DOMAIN_PREFIX}${APP_DOMAIN}`)
+            traefik.http.routers.api.rule: Host(`${DOMAIN_PREFIX}api.${APP_DOMAIN}`)
             traefik.http.routers.api.entrypoints: web-secured # <== Defining entrypoint for https
             traefik.http.routers.api.tls.certresolver: mytlschallenge # <== Defining certsresolvers for https
 
