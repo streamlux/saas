@@ -3,11 +3,10 @@ import { ConfigModule } from '@nestjs/config';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { AuthModule } from './auth/auth.module';
-import { UsersModule } from './users/users.module';
+import { TwitchEventSubModule } from '@streamlux-saas/twitch-eventsub';
 
 @Module({
-    imports: [AuthModule, UsersModule, ConfigModule.forRoot()],
+    imports: [ConfigModule.forRoot(), TwitchEventSubModule],
     controllers: [AppController],
     providers: [AppService],
 })
