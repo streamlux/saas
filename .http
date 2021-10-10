@@ -1,6 +1,7 @@
 @base=http://localhost:3333
+@twitchUser=
 
-POST {{base}}/api/twitch/subscriptions/115341247/stream.online HTTP/1.1
+POST {{base}}/api/twitch/{{twitchUserId}}/stream.online HTTP/1.1
 
 ###
 
