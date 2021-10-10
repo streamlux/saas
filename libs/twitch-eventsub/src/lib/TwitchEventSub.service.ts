@@ -100,11 +100,12 @@ export class TwitchEventSubService {
             status: subscription.status,
             creationDate: subscription.creationDate,
             condition: subscription.condition,
+            transport: subscription._transport
         };
     }
 
     private getAdapter() {
-        if (process.env.NODE_ENV !== 'production') {
+        if (process.env.NGROK === 'true') {
             return new NgrokAdapter();
         }
         return new ReverseProxyAdapter({
