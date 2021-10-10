@@ -110,7 +110,7 @@ export class TwitchEventSubService {
         }
         return new ReverseProxyAdapter({
             hostName: EVENTSUB_CALLBACK_DOMAIN, // The host name the server is available from
-            externalPort: 443, // The external port (optional, defaults to 443)
+            externalPort: parseInt(process.env.TWITCH_PORT), // The external port (optional, defaults to 443)
         });
     }
 }
