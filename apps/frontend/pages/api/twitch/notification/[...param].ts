@@ -43,9 +43,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     console.log(req.headers);
     console.log(req.body);
 
-    const messageSignature = req.headers["Twitch-Eventsub-Message-Signature"] as string;
-    const messageId = req.headers["Twitch-Eventsub-Message-Id"] as string;
-    const messageTimestamp = req.headers["Twitch-Eventsub-Message-Timestamp"] as string;
+    const messageSignature = req.headers["Twitch-Eventsub-Message-Signature".toLowerCase()] as string;
+    const messageId = req.headers["Twitch-Eventsub-Message-Id".toLowerCase()] as string;
+    const messageTimestamp = req.headers["Twitch-Eventsub-Message-Timestamp".toLowerCase()] as string;
 
     if (!verifySignature(messageSignature, messageId, messageTimestamp, req['rawBody'])) {
         console.log('Request verification failed.');
@@ -53,7 +53,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         res.end();
     }
 
-    const messageType: MessageType = req.headers['Twitch-Eventsub-Message-Type'] as MessageType;
+    const messageType: MessageType = req.headers['Twitch-Eventsub-Message-Type'.toLowerCase()] as MessageType;
 
     if (messageType === MessageType.Verification) {
         console.log('verifying webhook...');
