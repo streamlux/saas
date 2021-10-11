@@ -41,8 +41,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const param = req.query.param as string[];
     console.log(`POST - Notification: ${param.join(', ')}`)
 
-    const rawBody = await webhookPayloadParser(req);
-
     const messageSignature = req.headers["Twitch-Eventsub-Message-Signature"] as string;
     const messageId = req.headers["Twitch-Eventsub-Message-Id"] as string;
     const messageTimestamp = req.headers["Twitch-Eventsub-Message-Timestamp"] as string;
@@ -64,31 +62,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     if (messageType === MessageType.Notification) {
-        const jsonBody = JSON.parse(rawBody);
-        console.log(jsonBody.event);
+        console.log(req.body.event);
         res.status(200);
         res.end();
     }
 }
 
 function verifySignature(messageSignature: string, id: string, timestamp: string, body: unknown): boolean {
-    console.log('Verifying signature', messageSignature, id, timestamp, body);
+    console.log('Verifying signature', messageSignature, id, timestamp);
     const message = id + timestamp + body;
     const signature = crypto.createHmac('sha256', process.env.EVENTSUB_SECRET).update(message);
     const expectedSignatureHeader = "sha256=" + signature.digest("hex");
     return expectedSignatureHeader === messageSignature;
 }
-
-const webhookPayloadParser: (req: NextApiRequest) => Promise<string> = (req: NextApiRequest) =>
-    new Promise((resolve) => {
-        let data = "";
-        req.on("data", (chunk) => {
-            data += chunk;
-        });
-        req.on("end", () => {
-            resolve(Buffer.from(data).toString());
-        });
-    });
 
 function runMiddleware(req, res, fn) {
     return new Promise((resolve, reject) => {
