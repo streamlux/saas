@@ -1,25 +1,13 @@
-import { PrismaClient } from '@prisma/client';
+import { getAccounts } from '../../../util/getAccounts';
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { getSession } from 'next-auth/react'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-
-    console.log('hit');
     const session = await getSession({ req });
     if (session) {
-
-        console.log(session);
-        const client = new PrismaClient();
-        const accounts = await client.account.findMany({
-            where: {
-                userId: session.user['id']
-            }
-        });
-
-        const twitchAccount = accounts.find((account) => account.provider === 'twitch');
+        const accounts = await getAccounts(session);
         console.log(accounts);
-        console.log(twitchAccount);
-        res.status(200).json({ twitchAccount });
+        res.status(200).json({ accounts });
     } else {
         res.status(401);
     }
