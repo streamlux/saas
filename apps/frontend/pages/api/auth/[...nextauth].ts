@@ -130,6 +130,7 @@ export default NextAuth({
                     userId: user.id,
                 },
             });
+            session.user['id'] = user.id;
             session.accounts = {};
             accounts.forEach(async (account) => {
                 if (
