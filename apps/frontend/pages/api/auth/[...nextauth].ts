@@ -125,11 +125,13 @@ export default NextAuth({
         // async redirect({ url, baseUrl }) { return baseUrl },
         // async session({ session, token, user }) { return session },
         async session({ session, token, user }) {
+            console.log('checking session');
             const accounts = await prisma.account.findMany({
                 where: {
                     userId: user.id,
                 },
             });
+            session.userId = user.id;
             session.user['id'] = user.id;
             session.accounts = {};
             accounts.forEach(async (account) => {
