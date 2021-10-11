@@ -139,11 +139,12 @@ export default NextAuth({
                     account.provider === 'twitch' &&
                     account.expires_at > Date.now()
                 ) {
+                    console.log('refreshing twitch token');
                     const data = await refreshAccessToken(
                         account.refresh_token
                     );
 
-                    prisma.account.update({
+                    await prisma.account.update({
                         where: {
                             id: account.id,
                         },
