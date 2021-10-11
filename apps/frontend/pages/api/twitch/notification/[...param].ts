@@ -38,7 +38,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const messageId = req.headers["Twitch-Eventsub-Message-Id"] as string;
     const messageTimestamp = req.headers["Twitch-Eventsub-Message-Timestamp"] as string;
 
-    if (!verifySignature(messageSignature, messageId, messageTimestamp, req.body)) {
+    if (!verifySignature(messageSignature, messageId, messageTimestamp, rawBody)) {
         console.log('Request verification failed.');
         res.status(403).send("Forbidden"); // Reject requests with invalid signatures
         res.end();
