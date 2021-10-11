@@ -39,7 +39,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }));
 
     const param = req.query.param as string[];
-    console.log(`POST - Notification: ${param.join(', ')}`)
+    console.log(`POST - Notification: ${param.join(', ')}`);
+    console.log(req.headers);
+    console.log(req.body);
 
     const messageSignature = req.headers["Twitch-Eventsub-Message-Signature"] as string;
     const messageId = req.headers["Twitch-Eventsub-Message-Id"] as string;
