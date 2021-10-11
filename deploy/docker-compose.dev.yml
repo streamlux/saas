@@ -133,7 +133,7 @@ services:
 
     frontend:
         container_name: frontend
-        image: ghcr.io/streamlux/saas-frontend
+        image: streamlux/saas-frontend
         restart: always
         environment:
             - DATABASE_URL
@@ -143,9 +143,12 @@ services:
             - TWITCH_CLIENT_SECRET
             - NEXTAUTH_URL
             - SECRET
+            - EVENTSUB_SECRET
         networks:
             - web
             - backend
+        ports:
+            - 3000:3000
         labels:
             traefik.enable: true # <== Enable traefik to proxy this container
 
@@ -183,9 +186,9 @@ services:
 
 networks:
     web:
-        external: true
+        external: false
     backend:
-        external: true
+        external: false
 
 volumes:
     postgres-data:

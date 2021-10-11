@@ -14,11 +14,7 @@
         "skipLibCheck": true,
         "skipDefaultLibCheck": true,
         "baseUrl": ".",
-        "paths": {
-            "@streamlux-saas/twitch-eventsub": [
-                "libs/twitch-eventsub/src/index.ts"
-            ]
-        }
+        "paths": {}
     },
     "exclude": ["node_modules", "tmp"]
 }

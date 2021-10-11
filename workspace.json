@@ -1,15 +1,12 @@
 {
     "version": 2,
     "projects": {
-        "api": "apps/api",
         "frontend": "apps/frontend",
-        "frontend-e2e": "apps/frontend-e2e",
-        "twitch-eventsub": "libs/twitch-eventsub"
+        "frontend-e2e": "apps/frontend-e2e"
     },
     "cli": {
         "defaultCollection": "@nrwl/nest"
     },
-    "defaultProject": "api",
     "generators": {
         "@nrwl/react": {
             "application": {
