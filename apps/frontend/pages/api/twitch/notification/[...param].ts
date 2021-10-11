@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import NextCors from 'nextjs-cors';
 import crypto from 'crypto';
+import bodyParser from 'body-parser';
 
 type VerificationBody = {
     challenge: string;
@@ -29,6 +30,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
     });
 
+    await runMiddleware(req, res, bodyParser.json({
+        verify: (req, res, buf) => {
+            // Small modification to the JSON bodyParser to expose the raw body in the request object
+            // The raw body is required at signature verification
+            req['rawBody'] = buf
+        }
+    }));
+
     const param = req.query.param as string[];
     console.log(`POST - Notification: ${param.join(', ')}`)
 
@@ -38,7 +47,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const messageId = req.headers["Twitch-Eventsub-Message-Id"] as string;
     const messageTimestamp = req.headers["Twitch-Eventsub-Message-Timestamp"] as string;
 
-    if (!verifySignature(messageSignature, messageId, messageTimestamp, rawBody)) {
+    if (!verifySignature(messageSignature, messageId, messageTimestamp, req['rawBody'])) {
         console.log('Request verification failed.');
         res.status(403).send("Forbidden"); // Reject requests with invalid signatures
         res.end();
@@ -63,6 +72,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 }
 
 function verifySignature(messageSignature: string, id: string, timestamp: string, body: unknown): boolean {
+    console.log('Verifying signature', messageSignature, id, timestamp, body);
     const message = id + timestamp + body;
     const signature = crypto.createHmac('sha256', process.env.EVENTSUB_SECRET).update(message);
     const expectedSignatureHeader = "sha256=" + signature.digest("hex");
@@ -79,3 +89,15 @@ const webhookPayloadParser: (req: NextApiRequest) => Promise<string> = (req: Nex
             resolve(Buffer.from(data).toString());
         });
     });
+
+function runMiddleware(req, res, fn) {
+    return new Promise((resolve, reject) => {
+        fn(req, res, (result) => {
+            if (result instanceof Error) {
+                return reject(result)
+            }
+
+            return resolve(result)
+        })
+    })
+}
