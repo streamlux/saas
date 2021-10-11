@@ -12,12 +12,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const client = new PrismaClient();
         const accounts = await client.account.findMany({
             where: {
-                id: session.user['id']
+                userId: session.user['id']
             }
         });
 
         const twitchAccount = accounts.find((account) => account.provider === 'twitch');
-
+        console.log(accounts);
+        console.log(twitchAccount);
         res.status(200).json({ twitchAccount });
     } else {
         res.status(401);
