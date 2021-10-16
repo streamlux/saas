@@ -30,3 +30,4 @@ jobs:
               run: npx nx run frontend:make:ci
               env:
                   INPUT_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY }}
