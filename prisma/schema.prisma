@@ -62,6 +62,9 @@ model VerificationToken {
     @@map("verification_requests")
 }
 
+// Stripe models
+// Below models taken from https://github.com/gmpetrov/ultimate-saas-ts/blob/master/prisma/schema.prisma
+
 model Customer {
     id        String   @id @default(cuid())
     userId    String   @unique(map: "customers_user_id_unique") @map("user_id")
@@ -71,9 +74,6 @@ model Customer {
 
     @@map("customers")
 }
-
-// Stripe models
-// Below models taken from https://github.com/gmpetrov/ultimate-saas-ts/blob/master/prisma/schema.prisma
 
 model Product {
     id          String   @id @default(cuid())
