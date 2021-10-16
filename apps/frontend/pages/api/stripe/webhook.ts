@@ -46,7 +46,7 @@ handler.post(async (req, res) => {
             process.env.STRIPE_WEBHOOK_SECRET
         );
     } catch (err: any) {
-        console.log(`❌ Error message: ${err?.message}`);
+        console.log(`❌ Error verifying webhook. Message: ${err?.message}`);
         return res.status(400).send(`Webhook Error: ${err?.message}`);
     }
 
