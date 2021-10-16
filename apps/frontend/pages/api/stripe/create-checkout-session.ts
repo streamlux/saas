@@ -15,7 +15,7 @@ handler.post(async (req, res) => {
 
     const userId: string = req.session.userId;
 
-    const customerId = await getCustomerId(userId);
+    const customerId: string = await getCustomerId(userId);
 
     const checkoutSession: Stripe.Response<Stripe.Checkout.Session> = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
