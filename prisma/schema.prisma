@@ -26,6 +26,7 @@ model Account {
     user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
     @@unique([provider, providerAccountId])
+    @@map("accounts")
 }
 
 model Session {
@@ -34,16 +35,22 @@ model Session {
     userId       String
     expires      DateTime
     user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@map("sessions")
 }
 
 model User {
-    id            String    @id @default(cuid())
+    id            String        @id @default(cuid())
     name          String?
-    email         String?   @unique
+    email         String?       @unique
     emailVerified DateTime?
     image         String?
     accounts      Account[]
     sessions      Session[]
+    customer      Customer?
+    subscription  Subscription?
+
+    @@map("users")
 }
 
 model VerificationToken {
@@ -52,4 +59,93 @@ model VerificationToken {
     expires    DateTime
 
     @@unique([identifier, token])
+    @@map("verification_requests")
+}
+
+model Customer {
+    id        String   @id @default(cuid())
+    userId    String   @unique(map: "customers_user_id_unique") @map("user_id")
+    createdAt DateTime @default(now()) @map("created_at")
+    updatedAt DateTime @default(now()) @map("updated_at")
+    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@map("customers")
+}
+
+// Stripe models
+// Below models taken from https://github.com/gmpetrov/ultimate-saas-ts/blob/master/prisma/schema.prisma
+
+model Product {
+    id          String   @id @default(cuid())
+    active      Boolean  @default(false)
+    name        String
+    description String?
+    image       String?
+    metadata    Json?
+    createdAt   DateTime @default(now()) @map("created_at")
+    updatedAt   DateTime @default(now()) @map("updated_at")
+    prices      Price[]
+
+    @@map("products")
+}
+
+model Price {
+    id                String         @id @default(cuid())
+    productId         String         @map("product_id")
+    active            Boolean        @default(false)
+    currency          String
+    interval          PriceInterval?
+    unitAmount        Int?           @map("unit_amount")
+    interval_count    Int?
+    trial_period_days Int?
+    type              PriceType?
+    createdAt         DateTime       @default(now()) @map("created_at")
+    updatedAt         DateTime       @default(now()) @map("updated_at")
+    product           Product        @relation(fields: [productId], references: [id], onDelete: Cascade)
+    subscriptions     Subscription[]
+
+    @@map("prices")
+}
+
+model Subscription {
+    id                   String             @id @default(cuid())
+    userId               String             @unique(map: "subscriptions_user_id_unique") @map("user_id")
+    priceId              String
+    status               SubscriptionStatus
+    start_date           DateTime?
+    ended_at             DateTime?
+    trial_end            DateTime?
+    trial_start          DateTime?
+    cancel_at            DateTime?
+    cancel_at_period_end Boolean?
+    canceled_at          DateTime?
+    metadata             Json?
+    createdAt            DateTime           @default(now()) @map("created_at")
+    updatedAt            DateTime           @default(now()) @map("updated_at")
+    price                Price              @relation(fields: [priceId], references: [id])
+    user                 User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@map("subscriptions")
+}
+
+enum PriceType {
+    recurring
+    one_time
+}
+
+enum SubscriptionStatus {
+    active
+    canceled
+    incomplete
+    incomplete_expired
+    past_due
+    trialing
+    unpaid
+}
+
+enum PriceInterval {
+    day
+    month
+    week
+    year
 }
