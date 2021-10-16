@@ -1,4 +1,5 @@
 import { createAuthApiHandler } from '../../../util/ssr/createApiHandler';
+import prisma from '../../../util/ssr/prisma';
 
 const handler = createAuthApiHandler();
 

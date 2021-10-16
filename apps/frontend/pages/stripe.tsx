@@ -1,5 +1,5 @@
 import { Price, PriceInterval, Product, Subscription } from '@prisma/client';
-import type { GetStaticProps, NextPage } from 'next';
+import type { GetServerSideProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 import { useCallback, useEffect, useState } from 'react';
@@ -207,8 +207,10 @@ const Page: NextPage<Props> = ({ products }) => {
     );
 };
 
-export const getServerSideProps: GetStaticProps<Props> = async (context) => {
-    const products = await prisma?.product.findMany({
+export const getServerSideProps: GetServerSideProps<Props> = async (
+    context
+) => {
+    const products = await prisma.product.findMany({
         where: {
             active: true,
         },
