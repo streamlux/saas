@@ -207,7 +207,7 @@ const Page: NextPage<Props> = ({ products }) => {
     );
 };
 
-export const getStaticProps: GetStaticProps<Props> = async (context) => {
+export const getServerSideProps: GetStaticProps<Props> = async (context) => {
     const products = await prisma?.product.findMany({
         where: {
             active: true,
