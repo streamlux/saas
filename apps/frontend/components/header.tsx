@@ -99,6 +99,11 @@ export default function Header() {
                             </NextLink>
                         </WrapItem>
                         <WrapItem>
+                            <NextLink href="/pricing" passHref>
+                                <Link>Pricing</Link>
+                            </NextLink>
+                        </WrapItem>
+                        <WrapItem>
                             <NextLink href="/client" passHref>
                                 <Link>Client</Link>
                             </NextLink>
@@ -121,11 +126,6 @@ export default function Header() {
                         <WrapItem>
                             <NextLink href="/account" passHref>
                                 <Link>Account</Link>
-                            </NextLink>
-                        </WrapItem>
-                        <WrapItem>
-                            <NextLink href="/stripe" passHref>
-                                <Link>Stripe</Link>
                             </NextLink>
                         </WrapItem>
                     </Wrap>
