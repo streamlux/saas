@@ -1,28 +1,9 @@
-import {
-    HStack,
-    Avatar,
-    Flex,
-    Box,
-    Link,
-    WrapItem,
-    Spacer,
-    Button,
-    Text,
-    Center,
-    Wrap,
-    useBreakpointValue,
-    Menu,
-    MenuButton,
-    MenuItem,
-    MenuList,
-    IconButton,
-    Portal,
-} from '@chakra-ui/react';
+import { HStack, Avatar, Flex, Box, Link, WrapItem, Spacer, Button, Text, Center, Wrap, useBreakpointValue, Menu, MenuButton, MenuItem, MenuList, Portal } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import styles from './header.module.css';
 import React from 'react';
-import { HamburgerIcon, AddIcon, ExternalLinkIcon, RepeatIcon, EditIcon } from '@chakra-ui/icons';
+import { HamburgerIcon } from '@chakra-ui/icons';
 
 // The approach used in this component shows how to built a sign in and sign out
 // component that works on pages which support both client and server side
