@@ -17,8 +17,7 @@ const Page: NextPage<Props> = ({ products }) => {
     const { status } = useSession();
     const router = useRouter();
 
-    const [billingInterval, setBillingInterval] =
-        useState<PriceInterval>('month');
+    const [billingInterval, setBillingInterval] = useState<PriceInterval>('month');
 
     useEffect(() => {
         (async () => {
@@ -68,12 +67,9 @@ const Page: NextPage<Props> = ({ products }) => {
             <div className="bg-white">
                 <div className="px-4 py-24 mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <div className="sm:flex sm:flex-col sm:align-center">
-                        <h1 className="text-6xl font-extrabold text-gray-800 sm:text-center">
-                            Pricing Plans
-                        </h1>
+                        <h1 className="text-6xl font-extrabold text-gray-800 sm:text-center">Pricing Plans</h1>
                         <p className="mt-5 text-xl text-gray-500 sm:text-center">
-                            Start building for free, then add a site plan to go
-                            live. Account plans unlock additional features.
+                            Start building for free, then add a site plan to go live. Account plans unlock additional features.
                         </p>
                         <div className="relative self-center mt-6 bg-gray-100 rounded-lg p-0.5 flex sm:mt-8">
                             <button
@@ -112,22 +108,10 @@ const Page: NextPage<Props> = ({ products }) => {
                         {products
                             .sort(
                                 (a, b) =>
-                                    a?.prices?.find(
-                                        (one) =>
-                                            one.interval === billingInterval
-                                    )?.unitAmount -
-                                    b?.prices?.find(
-                                        (one) =>
-                                            one.interval === billingInterval
-                                    )?.unitAmount
+                                    a?.prices?.find((one) => one.interval === billingInterval)?.unitAmount - b?.prices?.find((one) => one.interval === billingInterval)?.unitAmount
                             )
                             .map((product) => {
-                                const price: Price = (
-                                    product as any
-                                )?.prices?.find(
-                                    (one: Price) =>
-                                        one.interval === billingInterval
-                                );
+                                const price: Price = (product as any)?.prices?.find((one: Price) => one.interval === billingInterval);
 
                                 if (!price) {
                                     return null;
@@ -146,53 +130,30 @@ const Page: NextPage<Props> = ({ products }) => {
                                         // )}
                                     >
                                         <div className="p-6">
-                                            <h2 className="text-lg font-medium leading-6 text-gray-900">
-                                                {product.name}
-                                            </h2>
-                                            <p className="mt-4 text-sm text-gray-500">
-                                                {product.description}
-                                            </p>
+                                            <h2 className="text-lg font-medium leading-6 text-gray-900">{product.name}</h2>
+                                            <p className="mt-4 text-sm text-gray-500">{product.description}</p>
                                             <p className="mt-8">
-                                                <span className="text-4xl font-extrabold text-gray-900">
-                                                    {`$${
-                                                        price.unitAmount / 100
-                                                    }`}
-                                                </span>{' '}
-                                                <span className="text-base font-medium text-gray-500">
-                                                    /mo
-                                                </span>
+                                                <span className="text-4xl font-extrabold text-gray-900">{`$${price.unitAmount / 100}`}</span>{' '}
+                                                <span className="text-base font-medium text-gray-500">/mo</span>
                                             </p>
                                             <a
-                                                onClick={() =>
-                                                    handlePricingClick(price.id)
-                                                }
+                                                onClick={() => handlePricingClick(price.id)}
                                                 className="block w-full py-2 mt-8 text-sm font-semibold text-center text-white bg-gray-900 border border-black rounded-md hover:bg-gray-700 hover:cursor-pointer"
                                             >
                                                 Buy {product.name}
                                             </a>
                                         </div>
                                         <div className="px-6 pt-6 pb-8">
-                                            <h3 className="text-xs font-medium tracking-wide text-gray-900 uppercase">
-                                                {"What's included"}
-                                            </h3>
-                                            <ul
-                                                role="list"
-                                                className="mt-6 space-y-4"
-                                            >
+                                            <h3 className="text-xs font-medium tracking-wide text-gray-900 uppercase">{"What's included"}</h3>
+                                            <ul role="list" className="mt-6 space-y-4">
                                                 {[
                                                     'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
                                                     'Cum repellendus libero non expedita quam eligendi',
                                                     'a deserunt beatae debitis culpa asperiores ipsum facilis,',
                                                     'excepturi reiciendis accusantium nemo quos id facere!',
                                                 ].map((feature) => (
-                                                    <li
-                                                        key={feature}
-                                                        className="flex space-x-3"
-                                                    >
-                                                        ✔
-                                                        <span className="text-sm text-gray-500">
-                                                            {feature}
-                                                        </span>
+                                                    <li key={feature} className="flex space-x-3">
+                                                        ✔<span className="text-sm text-gray-500">{feature}</span>
                                                     </li>
                                                 ))}
                                             </ul>
@@ -207,9 +168,7 @@ const Page: NextPage<Props> = ({ products }) => {
     );
 };
 
-export const getServerSideProps: GetServerSideProps<Props> = async (
-    context
-) => {
+export const getServerSideProps: GetServerSideProps<Props> = async (context) => {
     const products = await prisma.product.findMany({
         where: {
             active: true,

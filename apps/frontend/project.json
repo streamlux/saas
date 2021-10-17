@@ -26,7 +26,9 @@
         },
         "build": {
             "executor": "@nrwl/next:build",
-            "outputs": ["{options.outputPath}"],
+            "outputs": [
+                "{options.outputPath}"
+            ],
             "options": {
                 "root": "apps/frontend",
                 "outputPath": "dist/apps/frontend"
@@ -52,8 +54,12 @@
             "executor": "@nx-tools/nx-docker:build",
             "options": {
                 "file": "apps/frontend/Dockerfile",
-                "tags": ["streamlux/saas-frontend:latest"],
-                "platforms": ["linux/amd64"]
+                "tags": [
+                    "streamlux/saas-frontend:latest"
+                ],
+                "platforms": [
+                    "linux/amd64"
+                ]
             },
             "configurations": {
                 "ci": {
@@ -61,7 +67,9 @@
                     "no_cache": true,
                     "meta": {
                         "enabled": true,
-                        "images": ["ghcr.io/streamlux/saas-frontend"],
+                        "images": [
+                            "ghcr.io/streamlux/saas-frontend"
+                        ],
                         "tags": [
                             "type=ref,event=branch",
                             "type=ref,event=pr",
@@ -79,7 +87,9 @@
         },
         "test": {
             "executor": "@nrwl/jest:jest",
-            "outputs": ["coverage/apps/frontend"],
+            "outputs": [
+                "coverage/apps/frontend"
+            ],
             "options": {
                 "jestConfig": "apps/frontend/jest.config.js",
                 "passWithNoTests": true
@@ -87,9 +97,13 @@
         },
         "lint": {
             "executor": "@nrwl/linter:eslint",
-            "outputs": ["{options.outputFile}"],
+            "outputs": [
+                "{options.outputFile}"
+            ],
             "options": {
-                "lintFilePatterns": ["apps/frontend/**/*.{ts,tsx,js,jsx}"]
+                "lintFilePatterns": [
+                    "apps/frontend/**/*.{ts,tsx,js,jsx}"
+                ]
             }
         }
     },

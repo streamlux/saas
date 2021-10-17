@@ -1,4 +1,8 @@
 {
-  "presets": ["@nrwl/next/babel"],
-  "plugins": []
+    "presets": [
+        "@nrwl/next/babel"
+    ],
+    "plugins": [
+        "superjson-next"
+    ]
 }
