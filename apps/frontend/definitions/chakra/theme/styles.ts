@@ -8,6 +8,10 @@ import { Global } from "@emotion/react";
 import { StyledComponent } from "@emotion/styled";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { AnimationOptions } from "framer-motion";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import "babel-plugin-superjson-next";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { serialize } from "superjson";
 
 type GlobalStyles = Pick<ThemeOverride, "styles">;
 
