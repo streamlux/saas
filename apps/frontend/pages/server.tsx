@@ -1,5 +1,4 @@
 import { useSession, getSession } from 'next-auth/react';
-import Layout from '../components/layout';
 
 export default function Page() {
     // As this page uses Server Side Rendering, the `session` will be already
@@ -10,7 +9,7 @@ export default function Page() {
     const loading = status === 'loading';
 
     return (
-        <Layout>
+        <>
             <h1>Server Side Rendering</h1>
             <p>
                 This page uses the universal <strong>getSession()</strong> method in <strong>getServerSideProps()</strong>.
@@ -22,7 +21,7 @@ export default function Page() {
             <p>The advantage of Server Side Rendering is this page does not require client side JavaScript.</p>
             <p>The disadvantage of Server Side Rendering is that this page is slower to render.</p>
             <pre>{JSON.stringify(session, null, 2)}</pre>
-        </Layout>
+        </>
     );
 }
 

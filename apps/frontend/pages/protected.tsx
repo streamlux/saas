@@ -25,21 +25,17 @@ export default function Page(): ReactElement {
 
     // If no session exists, display access denied message
     if (!session) {
-        return (
-            <Layout>
-                <AccessDenied />
-            </Layout>
-        );
+        return <AccessDenied />;
     }
 
     // If session exists, display content
     return (
-        <Layout>
+        <>
             <h1>Protected Page </h1>
             <p>
                 {' '}
                 <strong>{content || '\u00a0'} </strong>
             </p>
-        </Layout>
+        </>
     );
 }

@@ -1,6 +1,28 @@
-import Link from 'next/link';
+import {
+    HStack,
+    Avatar,
+    Flex,
+    Box,
+    Link,
+    WrapItem,
+    Spacer,
+    Button,
+    Text,
+    Center,
+    Wrap,
+    useBreakpointValue,
+    Menu,
+    MenuButton,
+    MenuItem,
+    MenuList,
+    IconButton,
+    Portal,
+} from '@chakra-ui/react';
+import NextLink from 'next/link';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import styles from './header.module.css';
+import React from 'react';
+import { HamburgerIcon, AddIcon, ExternalLinkIcon, RepeatIcon, EditIcon } from '@chakra-ui/icons';
 
 // The approach used in this component shows how to built a sign in and sign out
 // component that works on pages which support both client and server side
@@ -8,18 +30,21 @@ import styles from './header.module.css';
 export default function Header() {
     const { data: session, status } = useSession();
     const loading = status === 'loading';
+    const buttonSize = useBreakpointValue(['sm', 'md']);
 
     return (
         <header>
             <noscript>
                 <style>{`.nojs-show { opacity: 1; top: 0; }`}</style>
             </noscript>
-            <div className={styles.signedInStatus}>
-                <p className={`nojs-show ${!session && loading ? styles.loading : styles.loaded}`}>
+            <Box className={styles.signedInStatus}>
+                <Box className={`nojs-show ${!session && loading ? styles.loading : styles.loaded}`} bg="blue.100" roundedBottom="lg" p={['2', '4']}>
                     {!session && (
-                        <>
-                            <span className={styles.notSignedInText}>You are not signed in</span>
-                            <a
+                        <Flex>
+                            <Text className={styles.notSignedInText}>You are not signed in</Text>
+                            <Spacer />
+                            <Button
+                                as={Link}
                                 href={`/api/auth/signin`}
                                 className={styles.buttonPrimary}
                                 onClick={(e) => {
@@ -28,77 +53,84 @@ export default function Header() {
                                 }}
                             >
                                 Sign in
-                            </a>
-                        </>
+                            </Button>
+                        </Flex>
                     )}
                     {session && (
-                        <>
-                            {session.user.image && (
-                                <span
-                                    style={{
-                                        backgroundImage: `url(${session.user.image})`,
-                                    }}
-                                    className={styles.avatar}
-                                />
-                            )}
-                            <span className={styles.signedInText}>
-                                <small>Signed in as</small>
-                                <br />
-                                <strong>{session.user.email || session.user.name}</strong>
-                            </span>
-                            <a
-                                href={`/api/auth/signout`}
-                                className={styles.button}
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    signOut();
-                                }}
-                            >
-                                Sign out
-                            </a>
-                        </>
+                        <Flex>
+                            <Spacer />
+                            <Center>
+                                <Box mx="4">
+                                    <Text fontSize={['sm', 'lg']} lineHeight="shorter">
+                                        Signed in as
+                                    </Text>
+                                    <Text fontSize={['sm', 'md']} fontWeight="bold" lineHeight="shorter">
+                                        {session.user.email || session.user.name}
+                                    </Text>
+                                </Box>
+                            </Center>
+                            <Menu>
+                                <MenuButton aria-label="Options" icon={<HamburgerIcon />} variant="outline">
+                                    <Avatar name={session.user.name} src={session.user.image} />
+                                </MenuButton>
+                                <Portal>
+                                    <MenuList>
+                                        <MenuItem
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                signOut();
+                                            }}
+                                        >
+                                            <NextLink href={`/api/auth/signout`}>Sign out</NextLink>
+                                        </MenuItem>
+                                    </MenuList>
+                                </Portal>
+                            </Menu>
+                        </Flex>
                     )}
-                </p>
-            </div>
-            <nav>
-                <ul className={styles.navItems}>
-                    <li className={styles.navItem}>
-                        <Link href="/">
-                            <a>Home</a>
-                        </Link>
-                    </li>
-                    <li className={styles.navItem}>
-                        <Link href="/client">
-                            <a>Client</a>
-                        </Link>
-                    </li>
-                    <li className={styles.navItem}>
-                        <Link href="/server">
-                            <a>Server</a>
-                        </Link>
-                    </li>
-                    <li className={styles.navItem}>
-                        <Link href="/protected">
-                            <a>Protected</a>
-                        </Link>
-                    </li>
-                    <li className={styles.navItem}>
-                        <Link href="/api-example">
-                            <a>API</a>
-                        </Link>
-                    </li>
-                    <li className={styles.navItem}>
-                        <Link href="/account">
-                            <a>Account</a>
-                        </Link>
-                    </li>
-                    <li className={styles.navItem}>
-                        <Link href="/stripe">
-                            <a>Stripe</a>
-                        </Link>
-                    </li>
-                </ul>
-            </nav>
+                </Box>
+            </Box>
+            <HStack w="full" my="4">
+                <Center w="full">
+                    <Wrap spacing={['2', '12']}>
+                        <WrapItem>
+                            <NextLink href="/" passHref>
+                                <Link>Home</Link>
+                            </NextLink>
+                        </WrapItem>
+                        <WrapItem>
+                            <NextLink href="/client" passHref>
+                                <Link>Client</Link>
+                            </NextLink>
+                        </WrapItem>
+                        <WrapItem>
+                            <NextLink href="/server" passHref>
+                                <Link>Server</Link>
+                            </NextLink>
+                        </WrapItem>
+                        <WrapItem>
+                            <NextLink href="/protected" passHref>
+                                <Link>Protected</Link>
+                            </NextLink>
+                        </WrapItem>
+                        <WrapItem>
+                            <NextLink href="/api-example" passHref>
+                                <Link>API</Link>
+                            </NextLink>
+                        </WrapItem>
+                        <WrapItem>
+                            <NextLink href="/account" passHref>
+                                <Link>Account</Link>
+                            </NextLink>
+                        </WrapItem>
+                        <WrapItem>
+                            <NextLink href="/stripe" passHref>
+                                <Link>Stripe</Link>
+                            </NextLink>
+                        </WrapItem>
+                    </Wrap>
+                </Center>
+            </HStack>
         </header>
     );
 }
