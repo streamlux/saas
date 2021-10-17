@@ -3,12 +3,7 @@ import nc, { ErrorHandler } from 'next-connect';
 
 import auth, { AppNextApiRequest } from '../../middlewares/auth';
 
-export const onError: ErrorHandler<NextApiRequest, NextApiResponse> = (
-    err,
-    req,
-    res,
-    next
-) => {
+export const onError: ErrorHandler<NextApiRequest, NextApiResponse> = (err, req, res, next) => {
     console.log(err);
     res.status(500).end(err.toString());
 };

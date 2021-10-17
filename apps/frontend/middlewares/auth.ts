@@ -9,11 +9,7 @@ export interface AppNextApiRequest extends NextApiRequest {
     };
 }
 
-const auth: Middleware<AppNextApiRequest, NextApiResponse> = async (
-    req,
-    res,
-    next
-) => {
+const auth: Middleware<AppNextApiRequest, NextApiResponse> = async (req, res, next) => {
     const session = await getSession({ req });
 
     if (!session) {

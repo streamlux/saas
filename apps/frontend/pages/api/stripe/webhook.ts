@@ -40,11 +40,7 @@ handler.post(async (req, res) => {
     let event;
 
     try {
-        event = stripe.webhooks.constructEvent(
-            buf,
-            sig,
-            process.env.STRIPE_WEBHOOK_SECRET
-        );
+        event = stripe.webhooks.constructEvent(buf, sig, process.env.STRIPE_WEBHOOK_SECRET);
     } catch (err: any) {
         console.log(`❌ Error verifying webhook. Message: ${err?.message}`);
         return res.status(400).send(`Webhook Error: ${err?.message}`);
@@ -149,12 +145,9 @@ handler.post(async (req, res) => {
                     {
                         const data = event.data.object as Stripe.Checkout.Session;
 
-                        const subscription = await stripe.subscriptions.retrieve(
-                            data.subscription as string,
-                            {
-                                expand: ['default_payment_method'],
-                            }
-                        );
+                        const subscription = await stripe.subscriptions.retrieve(data.subscription as string, {
+                            expand: ['default_payment_method'],
+                        });
 
                         await prisma.subscription.upsert({
                             where: {
@@ -207,9 +200,7 @@ handler.post(async (req, res) => {
             }
         } catch (error) {
             console.log(error);
-            return res
-                .status(400)
-                .send('Webhook error: "Webhook handler failed. View logs."');
+            return res.status(400).send('Webhook error: "Webhook handler failed. View logs."');
         }
     }
 

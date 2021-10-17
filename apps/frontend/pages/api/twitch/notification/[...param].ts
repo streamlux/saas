@@ -1,4 +1,4 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
+import type { NextApiRequest, NextApiResponse } from 'next';
 import NextCors from 'nextjs-cors';
 import crypto from 'crypto';
 import bodyParser from 'body-parser';
@@ -6,18 +6,18 @@ import bodyParser from 'body-parser';
 type VerificationBody = {
     challenge: string;
     subscription: unknown;
-}
+};
 
 enum MessageType {
     Notification = 'notification',
-    Verification = 'webhook_callback_verification'
+    Verification = 'webhook_callback_verification',
 }
 
 export const config = {
     api: {
         bodyParser: false,
     },
-}
+};
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     // Run the cors middleware
@@ -30,26 +30,30 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
     });
 
-    await runMiddleware(req, res, bodyParser.json({
-        verify: (req, res, buf) => {
-            // Small modification to the JSON bodyParser to expose the raw body in the request object
-            // The raw body is required at signature verification
-            req['rawBody'] = buf
-        }
-    }));
+    await runMiddleware(
+        req,
+        res,
+        bodyParser.json({
+            verify: (req, res, buf) => {
+                // Small modification to the JSON bodyParser to expose the raw body in the request object
+                // The raw body is required at signature verification
+                req['rawBody'] = buf;
+            },
+        })
+    );
 
     const param = req.query.param as string[];
     console.log(`POST - Notification: ${param.join(', ')}`);
     console.log(req.headers);
     console.log(req.body);
 
-    const messageSignature = req.headers["Twitch-Eventsub-Message-Signature".toLowerCase()] as string;
-    const messageId = req.headers["Twitch-Eventsub-Message-Id".toLowerCase()] as string;
-    const messageTimestamp = req.headers["Twitch-Eventsub-Message-Timestamp".toLowerCase()] as string;
+    const messageSignature = req.headers['Twitch-Eventsub-Message-Signature'.toLowerCase()] as string;
+    const messageId = req.headers['Twitch-Eventsub-Message-Id'.toLowerCase()] as string;
+    const messageTimestamp = req.headers['Twitch-Eventsub-Message-Timestamp'.toLowerCase()] as string;
 
     if (!verifySignature(messageSignature, messageId, messageTimestamp, req['rawBody'])) {
         console.log('Request verification failed.');
-        res.status(403).send("Forbidden"); // Reject requests with invalid signatures
+        res.status(403).send('Forbidden'); // Reject requests with invalid signatures
         res.end();
     }
 
@@ -74,7 +78,7 @@ function verifySignature(messageSignature: string, id: string, timestamp: string
     console.log('Verifying signature', messageSignature, id, timestamp);
     const message = id + timestamp + body;
     const signature = crypto.createHmac('sha256', process.env.EVENTSUB_SECRET).update(message);
-    const expectedSignatureHeader = "sha256=" + signature.digest("hex");
+    const expectedSignatureHeader = 'sha256=' + signature.digest('hex');
     return expectedSignatureHeader === messageSignature;
 }
 
@@ -82,10 +86,10 @@ function runMiddleware(req, res, fn) {
     return new Promise((resolve, reject) => {
         fn(req, res, (result) => {
             if (result instanceof Error) {
-                return reject(result)
+                return reject(result);
             }
 
-            return resolve(result)
-        })
-    })
+            return resolve(result);
+        });
+    });
 }

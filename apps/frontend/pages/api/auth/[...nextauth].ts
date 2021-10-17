@@ -134,14 +134,9 @@ export default NextAuth({
             session.user['id'] = user.id;
             session.accounts = {};
             accounts.forEach(async (account) => {
-                if (
-                    account.provider === 'twitch' &&
-                    account.expires_at > Date.now()
-                ) {
+                if (account.provider === 'twitch' && account.expires_at > Date.now()) {
                     console.log('refreshing twitch token');
-                    const data = await refreshAccessToken(
-                        account.refresh_token
-                    );
+                    const data = await refreshAccessToken(account.refresh_token);
 
                     await prisma.account.update({
                         where: {
