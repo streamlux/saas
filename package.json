@@ -38,6 +38,7 @@
         "regenerator-runtime": "0.13.7",
         "rxjs": "^7.3.0",
         "stripe": "^8.183.0",
+        "superjson": "^1.7.5",
         "tslib": "^2.0.0",
         "twitch": "^4.6.7",
         "twitch-auth": "^4.6.7"
