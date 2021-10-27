@@ -1,0 +1,29 @@
+# docker compose for local development
+# Simply starts a postgres database and adminer instance on localhost
+
+version: '3.1'
+
+services:
+    # postgres db
+    db:
+        container_name: db
+        image: postgres
+        restart: always
+        environment:
+            - POSTGRES_PASSWORD
+        ports:
+            - 5432:5432
+        volumes:
+            - postgres-data:/var/lib/postgresql/data
+
+    # adminer ui for postgres db
+    adminer:
+        # https://hub.docker.com/r/dehy/adminer
+        image: dehy/adminer
+        container_name: adminer
+        restart: always
+        ports:
+            - 8080:80
+
+volumes:
+    postgres-data:
