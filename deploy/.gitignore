@@ -1,7 +1,0 @@
-.env
-.env.*
-
-letsencrypt/
-run/
-logs/
-volumes/

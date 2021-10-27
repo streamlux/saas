@@ -2,6 +2,19 @@
 
 # Streamlux SaaS Template
 
+## Develop locally
+
+1. Install Docker engine
+1. Clone repo
+2. Create .env file in project root and copy paste the contents of `.env.template` in and fill in the values.
+3. Run `docker-compose up -d`
+4. Run `npm install`
+5. Run `prisma db push` *
+6. Run `prisma db seed` *
+7. Run `nx run frontend:serve` *
+
+_* May need to prefix command with `npx`. You can remove the need for npx by properly setting up your path._
+
 ## Todo
 
 - [x] Multi stage build https://codefresh.io/docker-tutorial/node_docker_multistage/
