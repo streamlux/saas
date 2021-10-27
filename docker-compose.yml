@@ -17,10 +17,10 @@ services:
             - postgres-data:/var/lib/postgresql/data
 
     # adminer ui for postgres db
-    db-adminer:
+    adminer:
         # https://hub.docker.com/r/dehy/adminer
         image: dehy/adminer
-        container_name: db_adminer
+        container_name: adminer
         restart: always
         ports:
             - 8080:80
