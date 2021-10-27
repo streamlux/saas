@@ -43,6 +43,7 @@ handler.post(async (req, res) => {
         event = stripe.webhooks.constructEvent(buf, sig, process.env.STRIPE_WEBHOOK_SECRET);
     } catch (err: any) {
         console.log(`❌ Error verifying webhook. Message: ${err?.message}`);
+        console.log('secret', process.env.STRIPE_WEBHOOK_SECRET);
         return res.status(400).send(`Webhook Error: ${err?.message}`);
     }
 
