@@ -22,6 +22,7 @@
         "@prisma/client": "^3.1.1",
         "@stripe/stripe-js": "^1.20.2",
         "axios": "^0.21.4",
+        "babel-plugin-superjson-next": "^0.4.1",
         "body-parser": "^1.19.0",
         "cookie-parser": "^1.4.5",
         "core-js": "^3.6.5",
@@ -34,7 +35,6 @@
         "nextjs-cors": "^2.0.0",
         "passport": "^0.4.1",
         "passport-jwt": "^4.0.0",
-        "babel-plugin-superjson-next": "^0.4.1",
         "passport-twitch-new": "^0.0.2",
         "pino-http": "^5.8.0",
         "pino-pretty": "^7.0.1",
@@ -45,9 +45,11 @@
         "rxjs": "^7.3.0",
         "stripe": "^8.183.0",
         "superjson": "^1.7.5",
+        "swr": "^1.0.1",
         "tslib": "^2.0.0",
         "twitch": "^4.6.7",
-        "twitch-auth": "^4.6.7"
+        "twitch-auth": "^4.6.7",
+        "twitter-lite": "^1.1.0"
     },
     "devDependencies": {
         "@nrwl/cli": "12.9.0",

@@ -49,6 +49,8 @@ model User {
     sessions      Session[]
     customer      Customer?
     subscription  Subscription?
+    banner        Banner?
+    tweet         Tweet?
 
     @@map("users")
 }
@@ -60,6 +62,29 @@ model VerificationToken {
 
     @@unique([identifier, token])
     @@map("verification_requests")
+}
+
+model Banner {
+    id     String @id @default(cuid())
+    userId String @unique(map: "banners_user_id_unique") @map("user_id")
+    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    enabled       Boolean @default(false)
+    templateId    String  @map("template_id")
+    originalImage String  @map("original_image")
+
+    @@map("banners")
+}
+
+model Tweet {
+    id     String @id @default(cuid())
+    userId String @unique(map: "tweets_user_id_unique") @map("user_id")
+    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    template String  @map("template")
+    enabled  Boolean @default(false)
+
+    @@map("tweets")
 }
 
 // Stripe models
