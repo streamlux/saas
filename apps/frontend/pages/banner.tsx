@@ -29,9 +29,13 @@ export default function Page() {
         <>
             <Heading>Banner setup</Heading>
             <ButtonGroup>
-                <Button onClick={async () => await refreshBanner()}>Refresh banner</Button>
+                <Button onClick={async () => await refreshBanner()} disabled={!data}>
+                    Refresh banner
+                </Button>
                 <Button onClick={async () => await upsertBanner()}>Setup banner</Button>
-                <Button onClick={async () => await toggle()}>{data && data.enabled ? 'Turn off live banner' : 'Turn on live banner'}</Button>
+                <Button onClick={async () => await toggle()} disabled={!data}>
+                    {data && data.enabled ? 'Turn off live banner' : 'Turn on live banner'}
+                </Button>
             </ButtonGroup>
             <pre>{data ? JSON.stringify(data, null, 4) : 'No banner'}</pre>
             {data && <Image src={data.originalImage} alt="Twitter profile banner" />}

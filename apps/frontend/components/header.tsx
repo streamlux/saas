@@ -4,6 +4,8 @@ import { signIn, signOut, useSession } from 'next-auth/react';
 import styles from './header.module.css';
 import React from 'react';
 import { HamburgerIcon } from '@chakra-ui/icons';
+import { useRouter } from 'next/router';
+import { useAdmin } from '../util/hooks/useAdmin';
 
 // The approach used in this component shows how to built a sign in and sign out
 // component that works on pages which support both client and server side
@@ -11,7 +13,7 @@ import { HamburgerIcon } from '@chakra-ui/icons';
 export default function Header() {
     const { data: session, status } = useSession();
     const loading = status === 'loading';
-    const buttonSize = useBreakpointValue(['sm', 'md']);
+    const [isAdmin] = useAdmin({ required: false });
 
     return (
         <header>
@@ -30,7 +32,7 @@ export default function Header() {
                                 className={styles.buttonPrimary}
                                 onClick={(e) => {
                                     e.preventDefault();
-                                    signIn();
+                                    signIn('twitter');
                                 }}
                             >
                                 Sign in
@@ -56,14 +58,7 @@ export default function Header() {
                                 </MenuButton>
                                 <Portal>
                                     <MenuList>
-                                        <MenuItem
-                                            onClick={(e) => {
-                                                e.preventDefault();
-                                                signOut();
-                                            }}
-                                        >
-                                            <NextLink href={`/api/auth/signout`}>Sign out</NextLink>
-                                        </MenuItem>
+                                        <MenuItem onClick={() => signOut({ redirect: false })}>Sign out</MenuItem>
                                     </MenuList>
                                 </Portal>
                             </Menu>
@@ -90,30 +85,17 @@ export default function Header() {
                             </NextLink>
                         </WrapItem>
                         <WrapItem>
-                            <NextLink href="/client" passHref>
-                                <Link>Client</Link>
-                            </NextLink>
-                        </WrapItem>
-                        <WrapItem>
-                            <NextLink href="/server" passHref>
-                                <Link>Server</Link>
-                            </NextLink>
-                        </WrapItem>
-                        <WrapItem>
-                            <NextLink href="/protected" passHref>
-                                <Link>Protected</Link>
-                            </NextLink>
-                        </WrapItem>
-                        <WrapItem>
-                            <NextLink href="/api-example" passHref>
-                                <Link>API</Link>
-                            </NextLink>
-                        </WrapItem>
-                        <WrapItem>
                             <NextLink href="/account" passHref>
                                 <Link>Account</Link>
                             </NextLink>
                         </WrapItem>
+                        {isAdmin && (
+                            <WrapItem>
+                                <NextLink href="/admin" passHref>
+                                    <Link>Admin</Link>
+                                </NextLink>
+                            </WrapItem>
+                        )}
                     </Wrap>
                 </Center>
             </HStack>
