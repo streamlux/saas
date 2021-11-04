@@ -5,18 +5,18 @@ import Footer from './footer';
 
 export default function Layout({ children }) {
     return (
-        <Container centerContent maxW={['full', 'container.xl']} minH="100vh">
-            <Flex direction="column" minH="100vh" w="full">
-                <Box as={chakra.header}>
-                    <Header />
-                </Box>
-                <Box as={chakra.main} flex="1">
+        <Flex direction="column" as={chakra.div} minH="100vh">
+            <Box as={chakra.header}>
+                <Header />
+            </Box>
+            <Container as={chakra.main} flex="1" centerContent maxW={['full', 'container.xl']}>
+                <Flex direction="column" w="full">
                     {children}
-                </Box>
-                <Box as={chakra.footer}>
-                    <Footer />
-                </Box>
-            </Flex>
-        </Container>
+                </Flex>
+            </Container>
+            <Box as={chakra.footer}>
+                <Footer />
+            </Box>
+        </Flex>
     );
 }

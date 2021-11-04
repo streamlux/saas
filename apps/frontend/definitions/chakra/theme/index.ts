@@ -1,4 +1,4 @@
-import { extendTheme } from "@chakra-ui/react";
+import { extendTheme, ThemeConfig } from "@chakra-ui/react";
 
 import styles from "./styles";
 
@@ -13,12 +13,17 @@ import fontSizes from "./foundations/fontSizes";
  * please visit https://chakra-ui.com/docs/getting-started#add-custom-theme-optional
  */
 
+const config: ThemeConfig = {
+    initialColorMode: "light",
+    useSystemColorMode: false,
+}
+
 const overrides = {
     ...styles,
     colors,
     fontSizes,
 };
 
-const theme = extendTheme(overrides);
+const theme = extendTheme(overrides, { config });
 
 export default theme;

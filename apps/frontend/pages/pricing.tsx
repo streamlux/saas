@@ -74,7 +74,7 @@ const Page: NextPage<Props> = ({ products }) => {
         <div className="bg-white">
             <VStack>
                 <Container centerContent maxW="container.lg">
-                    <Heading size="xl">Pricing Plans</Heading>
+                    <Heading size="xl">Pricing</Heading>
                     <Text>Start building for free, then add a site plan to go live. Account plans unlock additional features.</Text>
                 </Container>
                 <Center>
@@ -98,11 +98,11 @@ const Page: NextPage<Props> = ({ products }) => {
 
                             return (
                                 <WrapItem key={product.name}>
-                                    <Box rounded="md" dropShadow="lg" border="2px" borderColor="gray.200" p="4">
+                                    <Box rounded="md" p="4" experimental_spaceY="2">
                                         <Heading size="sm">{product.name}</Heading>
-                                        <Text color="gray.900" fontSize="2xl" fontWeight="extrabold" lineHeight="tight">
+                                        <Text fontSize="2xl" fontWeight="extrabold" lineHeight="tight">
                                             {`$${price.unitAmount / 100}`}
-                                            <Text as={chakra.span} fontSize="sm" fontWeight="normal" color="gray">
+                                            <Text as={chakra.span} fontSize="sm" fontWeight="normal">
                                                 /mo
                                             </Text>
                                         </Text>
@@ -119,7 +119,7 @@ const Page: NextPage<Props> = ({ products }) => {
                                                 'excepturi reiciendis accusantium nemo quos id facere!',
                                             ].map((feature) => (
                                                 <ListItem key={feature}>
-                                                    <ListIcon as={CheckIcon} />
+                                                    <ListIcon color="green.200" as={CheckIcon} />
                                                     {feature}
                                                 </ListItem>
                                             ))}
