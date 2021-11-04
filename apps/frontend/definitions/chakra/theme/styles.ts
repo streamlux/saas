@@ -18,6 +18,8 @@ type GlobalStyles = Pick<ThemeOverride, "styles">;
 export default {
     styles: {
         global: {
+            "html, body": {
+            },
         },
     },
 } as GlobalStyles;

@@ -45,6 +45,7 @@ model User {
     email         String?       @unique
     emailVerified DateTime?
     image         String?
+    role          Role          @default(user)
     accounts      Account[]
     sessions      Session[]
     customer      Customer?
@@ -53,6 +54,11 @@ model User {
     tweet         Tweet?
 
     @@map("users")
+}
+
+enum Role {
+    user
+    admin
 }
 
 model VerificationToken {
