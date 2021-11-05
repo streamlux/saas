@@ -97,18 +97,14 @@ export default function Header() {
                                 </MenuButton>
                                 <Portal>
                                     <MenuList>
-                                        <MenuItem>
-                                            <NextLink href="/account" passHref>
-                                                <Link>Account</Link>
-                                            </NextLink>
-                                        </MenuItem>
+                                        <NextLink href="/account" passHref>
+                                            <MenuItem>Account</MenuItem>
+                                        </NextLink>
                                         <MenuItem onClick={() => signOut({ redirect: false })}>Sign out</MenuItem>
                                         {isAdmin && (
-                                            <MenuItem>
-                                                <NextLink href="/admin" passHref>
-                                                    <Link>Admin</Link>
-                                                </NextLink>
-                                            </MenuItem>
+                                            <NextLink href="/admin" passHref>
+                                                <MenuItem>Admin</MenuItem>
+                                            </NextLink>
                                         )}
                                     </MenuList>
                                 </Portal>
