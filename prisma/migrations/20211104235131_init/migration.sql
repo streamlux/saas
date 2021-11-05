@@ -1,4 +1,7 @@
 -- CreateEnum
+CREATE TYPE "Role" AS ENUM ('user', 'admin');
+
+-- CreateEnum
 CREATE TYPE "PriceType" AS ENUM ('recurring', 'one_time');
 
 -- CreateEnum
@@ -44,6 +47,7 @@ CREATE TABLE "users" (
     "email" TEXT,
     "emailVerified" TIMESTAMP(3),
     "image" TEXT,
+    "role" "Role" NOT NULL DEFAULT E'user',
 
     CONSTRAINT "users_pkey" PRIMARY KEY ("id")
 );

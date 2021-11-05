@@ -63,13 +63,6 @@ export default function Header() {
                                         <Link>Pricing</Link>
                                     </NextLink>
                                 </WrapItem>
-                                {isAdmin && (
-                                    <WrapItem>
-                                        <NextLink href="/admin" passHref>
-                                            <Link>Admin</Link>
-                                        </NextLink>
-                                    </WrapItem>
-                                )}
                             </Wrap>
                         </Center>
                     </HStack>
@@ -111,6 +104,13 @@ export default function Header() {
                                                 <Link>Account</Link>
                                             </NextLink>
                                         </MenuItem>
+                                        {isAdmin && (
+                                            <MenuItem>
+                                                <NextLink href="/admin" passHref>
+                                                    <Link>Admin</Link>
+                                                </NextLink>
+                                            </MenuItem>
+                                        )}
                                     </MenuList>
                                 </Portal>
                             </Menu>
