@@ -23,10 +23,12 @@
         "@stripe/stripe-js": "^1.20.2",
         "axios": "^0.21.4",
         "babel-plugin-superjson-next": "^0.4.1",
+        "base64url": "^3.0.1",
         "body-parser": "^1.19.0",
         "cookie-parser": "^1.4.5",
         "core-js": "^3.6.5",
         "framer-motion": "^4.1.17",
+        "image-to-base64": "^2.2.0",
         "jsonwebtoken": "^8.5.1",
         "mysql": "^2.18.1",
         "next": "11.1.1",
@@ -49,6 +51,8 @@
         "tslib": "^2.0.0",
         "twitch": "^4.6.7",
         "twitch-auth": "^4.6.7",
+        "twitter": "^1.7.1",
+        "twitter-api-client": "^1.4.0",
         "twitter-lite": "^1.1.0"
     },
     "devDependencies": {

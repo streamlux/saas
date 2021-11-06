@@ -49,8 +49,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             },
         });
 
-        res.status(200).json({ accounts });
+        // res.status(200).json({ accounts });
+        res.send(201);
     } else {
-        res.status(401);
+        // res.status(401);
+        res.send(401);
     }
 }
