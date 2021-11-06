@@ -1,2 +1,2 @@
-export * from './lib/templates';
+export * from './lib/HelloWorld';
 export * from './lib/TwitchStream';

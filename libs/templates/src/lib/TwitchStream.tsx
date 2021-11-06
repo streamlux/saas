@@ -1,7 +1,7 @@
 import React from 'react';
 import { AbsoluteFill, Img } from 'remotion';
 import { ImageBackground } from './backgrounds/ImageBackground';
-import { CSSBackground } from './backgrounds/CSSBackground';
+import { CssBackground } from './backgrounds/CssBackground';
 import './fonts.module.css';
 
 const colorStyle: React.CSSProperties = {
@@ -10,16 +10,16 @@ const colorStyle: React.CSSProperties = {
     background: 'linear-gradient(to right, #b149ff 0%, #00ffff 100%)',
 };
 
-export const PreviewCard: React.FC<{
+export const TwitchStream: React.FC<{
     text?: string;
     backgroundColor?: string;
     backgroundUrl?: string;
     thumbnailUrl: string;
-}> = ({ backgroundColor, backgroundUrl, thumbnailUrl, text }) => {
+}> = ({ backgroundUrl, thumbnailUrl, text }) => {
     return (
         <div style={{ width: '100%', height: '100%' }}>
             {backgroundUrl && <ImageBackground src={backgroundUrl} />}
-            {backgroundColor && !backgroundUrl && <CSSBackground style={colorStyle} />}
+            {!backgroundUrl && <CssBackground style={colorStyle} />}
             <div style={{ display: 'flex', height: '100%', width: '100%', alignItems: 'center' }}>
                 <div
                     style={{

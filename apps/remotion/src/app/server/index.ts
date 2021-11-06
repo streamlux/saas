@@ -97,6 +97,9 @@ app.get(
                 onError: (err) => {
                     reject(err);
                 },
+                envVariables: {
+                    TEMPLATES_DIR: process.env.TEMPLATES_DIR
+                }
             })
                 .then((res) => resolve(res))
                 .catch((err) => reject(err));

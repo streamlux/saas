@@ -4,7 +4,7 @@ import React from 'react';
 import useSWR from 'swr';
 import axios from 'axios';
 import { Player } from '@remotion/player';
-import { PreviewCard } from '@streamlux-saas/templates';
+import { TwitchStream } from '@streamlux-saas/templates';
 
 export default function Page() {
     const { data, mutate } = useSWR<Banner>('banner', async () => (await fetch('/api/banner')).json());
@@ -46,7 +46,7 @@ export default function Page() {
                     thumbnailUrl: 'https://static-cdn.jtvnw.net/previews-ttv/live_user_teampgp-440x248.jpg',
                     backgroundUrl: data?.originalImage ?? undefined,
                 }}
-                component={PreviewCard}
+                component={TwitchStream}
                 durationInFrames={1}
                 compositionWidth={1000}
                 compositionHeight={333}

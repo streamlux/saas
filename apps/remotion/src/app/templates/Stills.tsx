@@ -1,56 +1,54 @@
 import React from 'react';
-import { Still, StillProps } from 'remotion';
+import { AnyComponent, Still, StillProps } from 'remotion';
 
-type Template = {
+type Awaited<T> = T extends PromiseLike<infer U> ? U : T
+
+type Templates = Awaited<typeof import('../../../../../libs/templates/src')>;
+
+type TemplateName = keyof Templates;
+type TemplateProps = {
+    [name in TemplateName]: React.ComponentProps<Templates[name]>
+};
+
+const getTemplate: (name: TemplateName) => () => Promise<{
+    default: AnyComponent<any>;
+}> = (name: TemplateName) => async () => ({ default: (await import('../../../../../libs/templates/src'))[name] });
+
+
+type Template<T extends TemplateName> = {
+    templateId: keyof Templates;
     description: string;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-} & StillProps<any>;
+} & StillProps<TemplateProps[T]>;
 
-const templates: Template[] = [
-    {
-        id: 'template-1',
-        description: 'Twitter banner',
-        width: 1500,
+function createTemplate<T extends TemplateName>(name: TemplateName, options: { defaultProps?: TemplateProps[T], height?: number, width?: number, description: string, id: string} ): Template<T> {
+    return {
+        templateId: name,
+        lazyComponent: getTemplate(name),
         height: 500,
-        defaultProps: {
-            title: 'Hello',
-            img: '',
-        },
-        lazyComponent: async () => ({ default: (await import('../../../../../libs/templates/src/lib/templates')).Hello }),
-    },
-    {
-        id: 'banner-1',
-        description: 'Twitter banner',
         width: 1500,
-        height: 500,
+        ...options
+    }
+};
+
+type TemplateMap = {
+    [name in TemplateName]: Template<name>;
+}
+
+const templates = [
+    createTemplate('TwitchStream', {
         defaultProps: {
-            title: 'Hello',
-            img: '',
+            text: 'I\'m live on Twitch!',
+            thumbnailUrl: 'https://static-cdn.jtvnw.net/previews-ttv/live_user_jvna-440x248.jpg'
         },
-        lazyComponent: () => import('./components/PreviewCard'),
-    },
-    {
-        id: 'twitch-1',
-        description: 'Twitter banner for Twitch stream',
-        width: 1500,
-        height: 500,
-        defaultProps: {
-            backgroundColor: 'purple',
-            thumbnailUrl: 'https://static-cdn.jtvnw.net/previews-ttv/live_user_jvna-440x248.jpg',
-        },
-        lazyComponent: () => import('./components/TwitchStream'),
-    },
-    {
-        id: 'twitch-template',
-        description: 'Twitter banner for Twitch stream',
-        width: 1500,
-        height: 500,
-        defaultProps: {
-            backgroundColor: 'purple',
-            thumbnailUrl: 'https://static-cdn.jtvnw.net/previews-ttv/live_user_jvna-440x248.jpg',
-        },
-        lazyComponent: async () => ({ default: (await import('../../../../../libs/templates/src/lib/TwitchStream')).PreviewCard }),
-    },
+        description: 'Shows Twitch stream thumbnail',
+        id: 'twitch'
+    }),
+    createTemplate('HelloWorld', {
+        defaultProps: {},
+        description: 'Hello world',
+        id: 'hello'
+    })
 ];
 
 export const RemotionVideo: React.FC = () => {
