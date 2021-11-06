@@ -2,7 +2,9 @@
     "version": 2,
     "projects": {
         "frontend": "apps/frontend",
-        "frontend-e2e": "apps/frontend-e2e"
+        "frontend-e2e": "apps/frontend-e2e",
+        "remotion": "apps/remotion",
+        "templates": "libs/templates"
     },
     "cli": {
         "defaultCollection": "@nrwl/nest"
@@ -19,5 +21,6 @@
                 "linter": "eslint"
             }
         }
-    }
+    },
+    "defaultProject": "remotion"
 }

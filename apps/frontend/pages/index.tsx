@@ -1,13 +1,10 @@
-import { Box, Button, ButtonGroup, Code, Heading, Image, Text } from '@chakra-ui/react';
-import { Banner } from '@prisma/client';
+import { Box, Button, Code, Heading, Text } from '@chakra-ui/react';
 import React from 'react';
-import useSWR from 'swr';
-import axios from 'axios';
-import { signIn, signOut, useSession } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 
 export default function Page() {
-    const { data: session, status } = useSession({ required: false }) as any;
-    const loading = status === 'loading';
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data: session } = useSession({ required: false }) as any;
 
     return (
         <>
