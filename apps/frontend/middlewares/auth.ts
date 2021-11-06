@@ -6,6 +6,7 @@ import { Session } from 'next-auth';
 export interface AppNextApiRequest extends NextApiRequest {
     session?: Session & {
         userId?: string;
+        role?: string;
     };
 }
 

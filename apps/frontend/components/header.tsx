@@ -45,7 +45,7 @@ export default function Header() {
             <Box className={styles.signedInStatus}>
                 <Flex className={`nojs-show ${!session && loading ? styles.loading : styles.loaded}`} bg="purple.400" p={['2', '4']}>
                     <Spacer />
-                    <HStack w="full" color="white">
+                    <HStack w="full" color="white" zIndex={10}>
                         <Center w="full">
                             <Wrap spacing={['2', '12']}>
                                 <WrapItem>
@@ -63,25 +63,17 @@ export default function Header() {
                                         <Link>Pricing</Link>
                                     </NextLink>
                                 </WrapItem>
-                                {isAdmin && (
-                                    <WrapItem>
-                                        <NextLink href="/admin" passHref>
-                                            <Link>Admin</Link>
-                                        </NextLink>
-                                    </WrapItem>
-                                )}
                             </Wrap>
                         </Center>
                     </HStack>
                     <Spacer />
-                    <Center>
+                    <Center zIndex={10}>
                         <IconButton size="md" aria-label="Toggle theme" icon={<SunIcon />} onClick={toggleColorMode}>
                             Toggle {colorMode === 'light' ? 'Dark' : 'Light'}
                         </IconButton>
                     </Center>
                     {!session && (
                         <Flex>
-                            <Text className={styles.notSignedInText}>You are not signed in</Text>
                             <Spacer />
                             <Button
                                 as={Link}
@@ -105,12 +97,15 @@ export default function Header() {
                                 </MenuButton>
                                 <Portal>
                                     <MenuList>
+                                        <NextLink href="/account" passHref>
+                                            <MenuItem>Account</MenuItem>
+                                        </NextLink>
                                         <MenuItem onClick={() => signOut({ redirect: false })}>Sign out</MenuItem>
-                                        <MenuItem onClick={() => signOut({ redirect: false })}>
-                                            <NextLink href="/account" passHref>
-                                                <Link>Account</Link>
+                                        {isAdmin && (
+                                            <NextLink href="/admin" passHref>
+                                                <MenuItem>Admin</MenuItem>
                                             </NextLink>
-                                        </MenuItem>
+                                        )}
                                     </MenuList>
                                 </Portal>
                             </Menu>

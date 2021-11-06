@@ -14,7 +14,7 @@ export function useAdmin(options?: UseAdminOptions): [boolean] {
     const [isAdmin, setIsAdmin] = useState(false);
 
     useEffect(() => {
-        if (!loading && session && session.user.role !== 'admin') {
+        if ((!loading && !session) || (session && session.user.role !== 'admin')) {
             if (options.required) {
                 router.replace('/');
                 setIsAdmin(false);

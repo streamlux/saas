@@ -35,8 +35,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             },
         });
         const userSubscriptions = response.data.data.filter((subscription) => subscription.condition.broadcaster_user_id === twitchAccount.providerAccountId);
-        res.status(200).json({ subscriptions: userSubscriptions });
+
+        if (req.method === 'GET') {
+            res.status(200).json({ subscriptions: userSubscriptions });
+        } else if (req.method === 'DELETE') {
+            userSubscriptions.forEach(async (webhook) => {
+                await axios.delete(`https://api.twitch.tv/helix/eventsub/subscriptions?id=${webhook.id}`, {
+                    headers: {
+                        'Client-ID': process.env.TWITCH_CLIENT_ID,
+                        Authorization: `Bearer ${token.accessToken}`,
+                    },
+                });
+            });
+            res.send(200);
+        }
     } else {
-        res.status(401);
+        console.log('this failed');
+        res.send(401);
     }
 }
