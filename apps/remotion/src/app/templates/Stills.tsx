@@ -1,5 +1,6 @@
 import React from 'react';
 import { AnyComponent, Still, StillProps } from 'remotion';
+import { environment } from '../../environments/environment';
 
 type Awaited<T> = T extends PromiseLike<infer U> ? U : T
 
@@ -12,7 +13,7 @@ type TemplateProps = {
 
 const getTemplate: (name: TemplateName) => () => Promise<{
     default: AnyComponent<any>;
-}> = (name: TemplateName) => async () => ({ default: (await import('../../../../../libs/templates/src'))[name] });
+}> = (name: TemplateName) => async () => ({ default: (await environment.getTemplates())[name] });
 
 
 type Template<T extends TemplateName> = {

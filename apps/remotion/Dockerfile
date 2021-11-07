@@ -35,4 +35,4 @@ USER pptruser
 
 EXPOSE 8000
 
-CMD ["npm", "run", "server"] 
+CMD ["npx", "ts-node", "app/server/index.ts"]

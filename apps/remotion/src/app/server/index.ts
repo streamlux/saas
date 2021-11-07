@@ -98,7 +98,6 @@ app.get(
                     reject(err);
                 },
                 envVariables: {
-                    TEMPLATES_DIR: process.env.TEMPLATES_DIR
                 }
             })
                 .then((res) => resolve(res))
