@@ -28,7 +28,7 @@
             "options": {
                 "outputPath": "dist/temp",
                 "generatePackageJson": true,
-                "main": "apps/remotion/src/server/index.ts",
+                "main": "apps/remotion/src/app/server/index.ts",
                 "tsConfig": "apps/remotion/tsconfig.app.json",
                 "assets": ["apps/remotion/src/assets"]
             },
