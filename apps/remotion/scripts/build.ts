@@ -1,15 +1,9 @@
 // Intended to be run with ts-node
 
-import fs from 'fs/promises';
-import path from 'path';
-import process from 'process';
 import * as fse from 'fs-extra';
 
 async function main() {
-    const projectName = 'remotion';
-
-
-    console.log('Building Remotion server...');
+    console.log('Copying files...');
 
     await fse.emptyDir('dist/apps/remotion');
     await fse.ensureDir('dist/apps/remotion/app');
@@ -20,6 +14,8 @@ async function main() {
     await fse.copy('apps/remotion/Dockerfile', 'dist/apps/remotion/Dockerfile');
     await fse.copy('apps/remotion/config/tsconfig.json', 'dist/apps/remotion/tsconfig.json');
     await fse.copy('apps/remotion/config/package.json', 'dist/apps/remotion/package.json');
+
+    console.log('Done copying files.')
 }
 
 main();
