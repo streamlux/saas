@@ -13,7 +13,7 @@ jobs:
 
             - name: Setup node
               uses: actions/setup-node@v2
-                with:
+              with:
                 node-version: '16'
 
             - name: Set up QEMU
