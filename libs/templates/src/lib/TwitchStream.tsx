@@ -1,7 +1,7 @@
 import React from 'react';
-import { AbsoluteFill, Img } from 'remotion';
+import { Img } from 'remotion';
 import { ImageBackground } from './backgrounds/ImageBackground';
-import { CssBackground } from './backgrounds/CssBackground';
+import { CSSBackground } from './backgrounds/CSSBackground';
 import './fonts.module.css';
 
 const colorStyle: React.CSSProperties = {
@@ -19,7 +19,7 @@ export const TwitchStream: React.FC<{
     return (
         <div style={{ width: '100%', height: '100%' }}>
             {backgroundUrl && <ImageBackground src={backgroundUrl} />}
-            {!backgroundUrl && <CssBackground style={colorStyle} />}
+            {!backgroundUrl && <CSSBackground style={colorStyle} />}
             <div style={{ display: 'flex', height: '100%', width: '100%', alignItems: 'center' }}>
                 <div
                     style={{
