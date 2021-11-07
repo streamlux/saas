@@ -19,7 +19,7 @@ const app = express();
 const port = process.env.PORT || 8000;
 
 const bundlePath = path.join(__dirname, '../templates/index.tsx');
-const templatePath = path.resolve(__dirname, process.env.NODE_ENV === 'production' ? '../app/components/index' : '../../../../../libs/templates/src/index');
+const templatePath = path.resolve(__dirname, process.env.NODE_ENV !== 'development' ? '../components/index' : '../../../../../libs/templates/src/index');
 let webpackBundling = bundle(bundlePath, undefined, {
     webpackOverride: (current) => {
         return {
