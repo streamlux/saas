@@ -7,7 +7,7 @@ interface UseAdminOptions {
 }
 
 export function useAdmin(options?: UseAdminOptions): [boolean] {
-    const { data: session, status } = useSession() as any;
+    const { data: session, status } = useSession({ required: options.required }) as any;
     const loading = status === 'loading';
     const router = useRouter();
 

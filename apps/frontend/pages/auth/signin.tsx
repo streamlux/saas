@@ -3,7 +3,7 @@ import { Banner } from '@prisma/client';
 import React from 'react';
 import useSWR from 'swr';
 import axios from 'axios';
-import { signIn, signOut, useSession } from 'next-auth/react';
+import { signIn } from 'next-auth/react';
 
 export default function Page() {
     return (

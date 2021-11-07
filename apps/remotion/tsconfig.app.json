@@ -1,0 +1,29 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "outDir": "../../dist/out-tsc",
+        "module": "commonjs",
+        "esModuleInterop": true,
+        "noEmit": true,
+        "types": [
+            "node"
+        ],
+        "target": "ES2018",
+		"jsx": "react-jsx",
+		"strict": true,
+		"lib": ["es2015", "DOM"],
+		"skipLibCheck": true,
+		"forceConsistentCasingInFileNames": true,
+        "allowSyntheticDefaultImports": true,
+        "isolatedModules": true
+    },
+    "exclude": [
+        "**/*.spec.ts"
+    ],
+    "include": [
+        "**/*.ts",
+        "**/*.tsx",
+        "**/*.js",
+        "**/*.jsx"
+    ]
+}

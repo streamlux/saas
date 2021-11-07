@@ -3,6 +3,8 @@ import { Banner } from '@prisma/client';
 import React from 'react';
 import useSWR from 'swr';
 import axios from 'axios';
+import { Player } from '@remotion/player';
+import { TwitchStream } from '@streamlux-saas/templates';
 
 export default function Page() {
     const { data, mutate } = useSWR<Banner>('banner', async () => (await fetch('/api/banner')).json());
@@ -38,7 +40,18 @@ export default function Page() {
                 </Button>
             </ButtonGroup>
             <pre>{data ? JSON.stringify(data, null, 4) : 'No banner'}</pre>
-            {data && <Image src={data.originalImage} alt="Twitter profile banner" />}
+            <Player
+                inputProps={{
+                    text: 'hello world',
+                    thumbnailUrl: 'https://static-cdn.jtvnw.net/previews-ttv/live_user_teampgp-440x248.jpg',
+                    backgroundUrl: data?.originalImage ?? undefined,
+                }}
+                component={TwitchStream}
+                durationInFrames={1}
+                compositionWidth={1000}
+                compositionHeight={333}
+                fps={1}
+            />
         </>
     );
 }
