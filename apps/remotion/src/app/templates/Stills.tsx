@@ -1,10 +1,10 @@
 import React from 'react';
 import { AnyComponent, Still, StillProps } from 'remotion';
-import { environment } from '../../environments/environment';
+import { TwitchStream } from '@streamlux-saas/templates';
 
 type Awaited<T> = T extends PromiseLike<infer U> ? U : T
 
-type Templates = Awaited<typeof import('../../../../../libs/templates/src')>;
+type Templates = Awaited<typeof import('@streamlux-saas/templates')>;
 
 type TemplateName = keyof Templates;
 type TemplateProps = {
@@ -13,7 +13,7 @@ type TemplateProps = {
 
 const getTemplate: (name: TemplateName) => () => Promise<{
     default: AnyComponent<any>;
-}> = (name: TemplateName) => async () => ({ default: (await environment.getTemplates())[name] });
+}> = (name: TemplateName) => async () => ({ default: (await import('@streamlux-saas/templates'))[name] });
 
 
 type Template<T extends TemplateName> = {
@@ -58,6 +58,16 @@ export const RemotionVideo: React.FC = () => {
             {templates.map((template) => (
                 <Still {...template} />
             ))}
+            <Still {...{
+                component: TwitchStream,
+                defaultProps: {
+                    thumbnailUrl: '',
+                    text: 'Test'
+                },
+                height: 500,
+                width: 500,
+                id: 'test'
+            }} />
         </>
     );
 };

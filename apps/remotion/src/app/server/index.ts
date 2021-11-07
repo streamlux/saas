@@ -19,8 +19,21 @@ const app = express();
 const port = process.env.PORT || 8000;
 
 const bundlePath = path.join(__dirname, '../templates/index.tsx');
-
-let webpackBundling = bundle(bundlePath);
+const templatePath = path.resolve(__dirname, process.env.NODE_ENV === 'production' ? '../app/components/index' : '../../../../../libs/templates/src/index');
+let webpackBundling = bundle(bundlePath, undefined, {
+    webpackOverride: (current) => {
+        return {
+            ...current,
+            resolve: {
+                ...current.resolve,
+                alias: {
+                    ...current.resolve?.alias,
+                    '@streamlux-saas/templates': templatePath
+                }
+            }
+        }
+    }
+});
 
 const tmpDir = fs.promises.mkdtemp(path.join(os.tmpdir(), 'remotion-'));
 
